@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "thesissensordatabase-de170",
+  "private_key_id": "1eea617559890f7c7e19e04861fc0a2625e54764",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCzvZhBAHO17M9l\ndpKx1yrjwwb9c2jkZgyjZHED1Y6CHJkEmerFecaF8MB1fgRUTeWtONdmYfs3LysI\nLeYgMjJcVsTHgOdaBub2J/6EMtjpwexN8Y2BH9dLA5lrIhRdyfN1oJOfj6jqcPPw\nRbsQjDoRV+f92hmNzn0tevFwqPt21XsiDEv8P/rl1Akmqg/c9o2HZgukP9zKQVOo\niSyWwl2MIupEfkdIgV2ZYOkQQmgrRgogPAvv9EWNKn4Zeg9lHqD0LBhW6FgwxGoz\nRp2a4vYCKQXRqQD3Eaj57/2+LK/OjU5/XF+0mAP0k6W+BCBzIbO2E/3dv+zin0l+\npMXf7iZpAgMBAAECggEAJBvcsIJUvKGccLfHdK7TUPpnNxeuZOQTeee9xJVskbsJ\nCqGZRp7WQSZCo9fzKrSThZ87trfMbiOts3D1IFa1Q1OzKJk+4Rkt4RnbydclOKDa\nxjXWxbAN4mYQtjMcgFMH9AOUZKPJvX9/oi+ACy0ApWdRle/w3kozX6WpR4bLLe4S\n4zUgzXpfumuBZgDM7ZBl8ExKCVWZDn2P0N/fTlSRCRnzZn6lozK7Gn3/XazpLWNF\npgEKxyBiaoPYGipRokMFMXYjc5aT/fcOY15Uqr0jeDAkYSUs1w1SurRHOUtZIpww\n3895wD5xBMqhj09A/HFK2q1I39/RN59VEFRrgZSbOQKBgQDnp4f44VvI7V9XhWm4\nyroHQr5JzZZhZ/9GYXhAjZhlPhqVi4+iKESiw1k0QENd8yBeEB5mdkVIa7mxxBWR\n63Vff64ha0+bTfwRBrcwCCp83BOYDZrWNHVpKQrVX21ggfqZhB3E9YrJeYTRg2L0\n9xKvAA5lCdYngD1n6PijK9LoUwKBgQDGoV2hfdatdqmVy6ygDpgTnNlVO0XD8ntT\n97OgRydqaKbUMFFNKgekS8zzADZIgx1UdlbL7qzR6JTL59Yz40SzqO0WvGzDfHyW\nahsm7oAK6gxRZDR4180Yz42pNuox5otAH3FIvKMKHm70FFkQ0DT8n3bPDdfIlYJq\nycrcPQdu0wKBgQDBo3q3gbl1hWZTBIRRIbTK6PGjQ6TWm1X5gPRCEZo31ufl5ZkU\n1VA6NczVLnqhh9+ggRzITUiwtsusWtok9YtRXqsx6D/M9C0mFlT+Y3UQle4TBhxN\nvd//HX2eynvlVgEiXht8TjvLGjb54zfOyNDnU8a0krpenoW13DoqOzG7XQKBgQCg\nt8iu9sdRrAYj8p1HFQfwNqWT1VXp6rXnhzGMqoY2D1+NqVrfePad9cdrh+xkV9LP\nmME6WXD0l6BuLLShX28jf7f3AZdvxbZ5bnlx0uE/84jsAoyCivqk7KvPE2QD5Gsg\nA1ECbb/uXBmi3SQD+rQlBFJ5ztWes3rHNWgzNB5jiQKBgCyPPkAkUDjIVmbvLjCB\ncB09nB2v6Z0Veue6Tw9dpC9iwZh5TwEmUBzlTk/XsrmjIIt/e8IBXCG2oBfbr9hF\nvzmFusyjP07U9kK8pnpbpu/qRVbRWfL+basZphhh/QqPlOs7O5HySU2rFApAYIUQ\noPLs0VgkpTwe+9+aej86yxck\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-po3a0@thesissensordatabase-de170.iam.gserviceaccount.com",
+  "client_id": "109253686521736882222",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-po3a0%40thesissensordatabase-de170.iam.gserviceaccount.com"
+}

@@ -1,0 +1,11 @@
+Problem Solving Links
+
+1. Set FLASK_APP: https://github.com/Microsoft/vscode-docs/issues/1881
+2. Disabled Scripts: https://stackoverflow.com/questions/4037939/powershell-says-execution-of-scripts-is-disabled-on-this-system
+3. Firebase with Python: https://www.freecodecamp.org/news/how-to-get-started-with-firebase-using-python/ 
+4. Install Flask and virtual environment: https://www.youtube.com/watch?v=QjtW-wnXlUY
+
+Python with database
+set(): Overwrite the old data if existed, create new data
+update(): Update to the lastest data version
+push(): Push new data to the Firebase

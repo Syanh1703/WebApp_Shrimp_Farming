@@ -1,0 +1,63 @@
+<table class = "table table-dark table-stripped">
+    <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Value</th>
+            <th scope="col">Date</th>
+            <th scope="col">Time</th>
+        </tr>
+    </thead>
+    <tbody id="table_body">
+        {% for indexes in data %}
+            <tr>
+                <td id="id_{{indexes.id }}">{{ indexes.id }}</td>
+                <td id="name_{{indexes.id }}">{{ indexes.name }}</td>
+                <td id="value_{{ indexes.id }}">{{ indexes.value }}</td>
+                <td id="date_{{ indexes.id }}">{{ indexes.date }}</td>
+                <td id="time_{{ indexes.id }}">{{ indexes.time }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<br>
+
+<script>
+    console.log("This is the sensor value website")
+    setInterval(
+        function(){
+            fetch('/data_json').then(
+                response => response.json()
+            ).then(
+                data => 
+                data.forEach(sensor_val =>
+                updateElement(sensor_val)
+                )
+            )
+        }, 2000
+    );
+
+function updateElement(val){
+    Object.entries(val).forEach(([k,v]) => {
+        element = document.getElementById(k + "_" + val.id);
+        previousValue = element.innerHTML;
+
+        if(previousValue !== v.toString())
+        {
+            blinkUpdate(element,v.toString())
+        }
+    }) 
+}
+
+function blinkUpdate(element, newValue, newColor = '#00FF00')
+{
+    previousColor = element.style.color;
+    element.innerHTML = newValue;
+    element.style.color = newColor;
+    //Set time out to back to the original
+    setTimeout(() => {
+        element.style.color = previousColor
+    }, 1000)
+}
+</script>
