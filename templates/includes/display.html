@@ -11,11 +11,11 @@
     <tbody id="table_body">
         {% for indexes in data %}
             <tr>
-                <td id="id_{{indexes.id }}">{{ indexes.id }}</td>
-                <td id="name_{{indexes.id }}">{{ indexes.name }}</td>
-                <td id="value_{{ indexes.id }}">{{ indexes.value }}</td>
-                <td id="date_{{ indexes.id }}">{{ indexes.date }}</td>
-                <td id="time_{{ indexes.id }}">{{ indexes.time }}</td>
+                <td id="id_{{ indexes.id }}", style="text-align:center;">{{ indexes.id }}</td>
+                <td id="name_{{ indexes.id }}", style="text-align:center;">{{ indexes.name }}</td>
+                <td id="value_{{ indexes.id }}", style="text-align:center;">{{ indexes.value }}</td>
+                <td id="date_{{ indexes.id }}", style="text-align:center;">{{ indexes.date }}</td>
+                <td id="time_{{ indexes.id }}", style="text-align:center;">{{ indexes.time }}</td>
             </tr>
         {% endfor %}
     </tbody>
@@ -24,28 +24,28 @@
 <br>
 
 <script>
-    console.log("This is the sensor value website")
-    setInterval(
-        function(){
-            fetch('/data_json').then(
-                response => response.json()
-            ).then(
-                data => 
-                data.forEach(sensor_val =>
-                updateElement(sensor_val)
+    setInterval(function()
+    {
+        console.log("hello from Display")
+        fetch('/data_json').then(
+            response => response.json()
+        ).then(
+            data => 
+                data.forEach(val => 
+                    updateElement(val),
+                    console.log("Updated Data")
                 )
-            )
-        }, 2000
-    );
+        )
+    }, 1000); 
 
 function updateElement(val){
-    Object.entries(val).forEach(([k,v]) => {
-        element = document.getElementById(k + "_" + val.id);
+    Object.entries(val).forEach(([key,value]) => {
+        element = document.getElementById(key.toString() + "_" + val.id.toString());
         previousValue = element.innerHTML;
 
-        if(previousValue !== v.toString())
+        if(previousValue !== value.toString())
         {
-            blinkUpdate(element,v.toString())
+            element.innerHTML = value.toString();
         }
     }) 
 }

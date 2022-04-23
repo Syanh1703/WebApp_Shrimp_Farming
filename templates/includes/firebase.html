@@ -1,64 +1,88 @@
-<html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    </head>
-    <body>
-        <script type="module">
-            // Import the functions you need from the SDKs you need
-            import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
-            import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js";
-            // TODO: Add SDKs for Firebase products that you want to use
-            // https://firebase.google.com/docs/web/setup#available-libraries
-          
-            // Your web app's Firebase configuration
-            // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-            const firebaseConfig = {
-              apiKey: "AIzaSyBP7fl3Vd5SIat7JYiTIx3VVkMbKDViSFM",
-              authDomain: "thesissensordatabase-de170.firebaseapp.com",
-              databaseURL: "https://thesissensordatabase-de170-default-rtdb.firebaseio.com",
-              projectId: "thesissensordatabase-de170",
-              storageBucket: "thesissensordatabase-de170.appspot.com",
-              messagingSenderId: "351547326174",
-              appId: "1:351547326174:web:86de24842ebc3bbcb98c4f",
-              measurementId: "G-36XL2LDL5Y"
-            };
-          
-            // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
-            const analytics = getAnalytics(app);
-
-            function getDataPH(){
-                firebase.database().ref("Sensor/pH").once('value', function(snapshot)
-                {
-                    snapshot.forEach(function(childSnapshot){
-                        var childData = childSnapshot.val();
-                    })
-                })
-            }
-          </script>
-    </body>
-</html>
-
-<style>
-    .btn_Decor{
-        margin-left: 80px;
-        height: 20px;
-    }
-</style>
-
-<div class="btn_Decor">
-    <button onclick="getDataPH()"> More Details </button>
-</div>
-
-<br>
-
 <table class = "table table-dark table-stripped">
     <thead>
         <tr>
             <th scope="col">Time</th>
-            <th scope="col">Value</th>
+            <th scope="col">DO Value</th>
+            <th scope="col">Temp Value</th>
+            <th scope="col">pH Value</th>
         </tr>
     </thead>
+    <tbody id="table_body">
+        {% for indexes in hourly_array %}
+            <tr>
+                <td id="id_{{ indexes.id }}", style="text-align:center;">{{ indexes.hour }}</td>
+                <td id="value_{{ indexes.id }}", style="text-align:center;">{{ indexes.value }}</td>
+                <td id="time_{{ indexes.id }}", style="text-align:center;">{{ indexes.id }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
 </table>
+
+<br>
+
+<script>
+    setInterval(function()
+    {
+        console.log("hello from Display")
+        fetch('/hourly_data_json').then(
+            response => response.json()
+        ).then(
+            data => 
+                data.forEach(val => 
+                    updateElement(val),
+                    console.log("Updated Data Hourly")
+                )
+        )
+    }, 1000); 
+
+function updateElement(val){
+    Object.entries(val).forEach(([key,value]) => {
+        element = document.getElementById(key.toString() + "_" + val.id.toString());
+        previousValue = element.innerHTML;
+
+        if(previousValue !== value.toString())
+        {
+            element.innerHTML = value.toString();
+        }
+    }) 
+}
+
+function blinkUpdate(element, newValue, newColor = '#00FF00')
+{
+    previousColor = element.style.color;
+    element.innerHTML = newValue;
+    element.style.color = newColor;
+    //Set time out to back to the original
+    setTimeout(() => {
+        element.style.color = previousColor
+    }, 1000)
+}
+</script>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-analytics.js";
+    import {getDatabase, ref, set, get, child, update, remove} from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js"
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+    
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyBP7fl3Vd5SIat7JYiTIx3VVkMbKDViSFM",
+        authDomain: "thesissensordatabase-de170.firebaseapp.com",
+        databaseURL: "https://thesissensordatabase-de170-default-rtdb.firebaseio.com",
+        projectId: "thesissensordatabase-de170",
+        storageBucket: "thesissensordatabase-de170.appspot.com",
+        messagingSenderId: "351547326174",
+        appId: "1:351547326174:web:86de24842ebc3bbcb98c4f",
+        measurementId: "G-36XL2LDL5Y"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const db = getDatabase();
+    const dbref = ref(db)
+</script>
