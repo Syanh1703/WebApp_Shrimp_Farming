@@ -5,7 +5,13 @@ Problem Solving Links
 3. Firebase with Python: https://www.freecodecamp.org/news/how-to-get-started-with-firebase-using-python/ 
 4. Install Flask and virtual environment: https://www.youtube.com/watch?v=QjtW-wnXlUY
 
+Error: No module named: pip
+Sol: python -m ensurepip
+
 Python with database
 set(): Overwrite the old data if existed, create new data
 update(): Update to the lastest data version
 push(): Push new data to the Firebase
+
+
+IoT Gateway IP adrress: 192.168.0.14

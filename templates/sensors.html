@@ -2,6 +2,7 @@
 
 {% block head %}
 <title>Sensor Result Table</title>
+
 {% endblock %}
 
 {% block body %}
@@ -27,6 +28,7 @@
 <div class="result">
     <h2>Sensor Value</h2>
         {% include 'includes/display.html' %}
-        {% include 'includes/firebase.html' %}
+        <h3>Details Value</h3>
+        {% include 'includes/graph.html' %}
 </div> 
 {% endblock %}

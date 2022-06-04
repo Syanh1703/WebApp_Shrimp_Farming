@@ -1,63 +1,55 @@
-<table class = "table table-dark table-stripped">
-    <thead>
+
+<table class = "table table-dark table-stripped" style="width: 70%;">
+    <thead style="text-align: center;">
         <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Name</th>
-            <th scope="col">Value</th>
-            <th scope="col">Date</th>
-            <th scope="col">Time</th>
+            <th style="text-align: center;" scope="col">Time</th>
+            <th style="text-align: center;" scope="col">PH</th>
+            <th style="text-align: center;" scope="col">DO</th>
+            <th style="text-align: center;" scope="col">Temp</th>
         </tr>
     </thead>
     <tbody id="table_body">
-        {% for indexes in data %}
             <tr>
-                <td id="id_{{ indexes.id }}", style="text-align:center;">{{ indexes.id }}</td>
-                <td id="name_{{ indexes.id }}", style="text-align:center;">{{ indexes.name }}</td>
-                <td id="value_{{ indexes.id }}", style="text-align:center;">{{ indexes.value }}</td>
-                <td id="date_{{ indexes.id }}", style="text-align:center;">{{ indexes.date }}</td>
-                <td id="time_{{ indexes.id }}", style="text-align:center;">{{ indexes.time }}</td>
+                <td id="timeCollect", style="text-align:center;">{{ date }}</td>
+                <td id="valuePH", style="text-align:center;">{{ PH }}</td>
+                <td id="valueDO", style="text-align:center;">{{ DO }}</td>
+                <td id="valueTemp", style="text-align:center;">{{ Temp }}</td>
             </tr>
-        {% endfor %}
+        
     </tbody>
 </table>
 
 <br>
 
 <script>
-    setInterval(function()
+    function startLiveUpdate()
     {
-        console.log("hello from Display")
-        fetch('/data_json').then(
-            response => response.json()
-        ).then(
-            data => 
-                data.forEach(val => 
-                    updateElement(val),
-                    console.log("Updated Data")
-                )
-        )
-    }, 1000); 
+        const valuePH = document.getElementById('valuePH')
+        const valueDO = document.getElementById('valueDO')
+        const valueTemp = document.getElementById('valueTemp')
+        const timeCollect = document.getElementById('timeCollect')
 
-function updateElement(val){
-    Object.entries(val).forEach(([key,value]) => {
-        element = document.getElementById(key.toString() + "_" + val.id.toString());
-        previousValue = element.innerHTML;
-
-        if(previousValue !== value.toString())
+        setInterval(function()
         {
-            element.innerHTML = value.toString();
-        }
-    }) 
-}
+            fetch('/data_json').then(function(response)
+            {
+                return response.json()
+            }).then(function(data)
+            {
+                valuePH.textContent =  data.pH;
+                valueDO.textContent = data.DO;
+                valueTemp.textContent = data.Tmp;
+                timeCollect.textContent = data.date;
 
-function blinkUpdate(element, newValue, newColor = '#00FF00')
-{
-    previousColor = element.style.color;
-    element.innerHTML = newValue;
-    element.style.color = newColor;
-    //Set time out to back to the original
-    setTimeout(() => {
-        element.style.color = previousColor
-    }, 1000)
-}
+            }).catch(function(error)
+            {
+                console.log(error);
+            })
+        },1000);
+    }
+    document.addEventListener('ContentLoader', function()
+    {
+        startLiveUpdate();
+    });
 </script>
+

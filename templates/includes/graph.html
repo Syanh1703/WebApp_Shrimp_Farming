@@ -1,32 +1,164 @@
-<html>
-  <head>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['corechart']});
-      google.charts.setOnLoadCallback(drawChart);
+<head>
+  <meta http-equiv="refresh" content="30">
+</head>
+<br>
+<style type="text/css">
+  .label{
+    text-align: center;
+    margin: 20px;
+  }
+  .chartCard{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 30vh;
+  }
+  .chartBox{
+    width: 30%;
+    padding: 20px;
+  }
+  h2{
+    text-align: center;
+    font-size: 46px;
+  }
+  h3{
+    text-align: center;
+    font-size: 40px;
+  }
+</style>
 
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Time', 'Sales', 'Expenses'],
-          ['00:00',  1000,      400],
-          ['2005',  1170,      460],
-          ['2006',  660,       1120],
-          ['2007',  1030,      540]
-        ]);
+<!--Link to Firebase-->
+<body>
+  
+  <div class="chartCard" style="position: relative;" id="sensor-stats">
+    <div class="chartBox">
+      <canvas id="myPHChart"></canvas>
+    </div>
+    <div class="chartBox">
+      <canvas id="myDOChart"></canvas>
+    </div>
+    <div class="chartBox">
+      <canvas id="myTempChart"></canvas>
+    </div>
+  </div>
 
-        var options = {
-          title: 'Data In',
-          curveType: 'function',
-          legend: { position: 'bottom' }
-        };
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script type="text/javascript">
+      const DO_data = [];
+      const PH_data = [];
+      const T_data = [];
+      //Django
+      {% for x in DO_axis %}
+        DO_data.push('{{ x }}')
+      {% endfor %}
 
-        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+      {% for x in PH_axis %}
+        PH_data.push('{{ x }}')
+      {% endfor %}
 
-        chart.draw(data, options);
+      {% for x in Temp_axis %}
+        T_data.push('{{ x }}')
+      {% endfor %}
+
+  </script>
+  <script>
+    let x_axis = []
+    for(let i = 0; i<24; i++)
+    {
+      x_axis.push(i.toString());
+    }
+    const ctx_DO = document.getElementById('myDOChart').getContext('2d');
+    const ctx_PH = document.getElementById('myPHChart').getContext('2d');
+    const ctx_T = document.getElementById('myTempChart').getContext('2d');
+    const myDOChart = new Chart(ctx_DO, {
+      type: 'line',
+      data: {
+          labels: x_axis,
+          datasets: [{
+              label: 'DO Value',
+              data: DO_data,
+              backgroundColor: 'transparent',
+              borderColor: 'red',
+              borderWidth: 3
+          }]
+      },
+      options: {
+        animation:
+        {
+          duration: 0
+        },
+        elements:{
+          line:{
+            tension:0
+          }
+        },
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
       }
-    </script>
-  </head>
-  <body>
-    <div id="curve_chart" style="width: 1000px; height: 650px; margin: 50px auto;"></div>
-  </body>
-</html>
+  });
+
+  const myPHChart = new Chart(ctx_PH, {
+      type: 'line',
+      data: {
+          labels: x_axis,
+          datasets: [{
+              label: 'PH Value',
+              data: PH_data,
+              backgroundColor: 'transparent',
+              borderColor: 'red',
+              borderWidth: 3
+          }]
+      },
+      options: {
+        animation:
+        {
+          duration: 0
+        },
+        elements:{
+          line:{
+            tension:0
+          }
+        },
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
+
+  const myTempChart = new Chart(ctx_T, {
+      type: 'line',
+      data: {
+          labels: x_axis,
+          datasets: [{
+              label: 'Temperature Value',
+              data: T_data,
+              backgroundColor: 'transparent',
+              borderColor: 'red',
+              borderWidth: 3
+          }]
+      },
+      options: {
+        animation:
+        {
+          duration: 0
+        },
+        elements:{
+          line:{
+            tension:0
+          }
+        },
+          scales: {
+              y: {
+                  beginAtZero: true
+              }
+          }
+      }
+  });
+  </script>
+</body>
