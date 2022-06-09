@@ -48,6 +48,7 @@
       const DO_data = [];
       const PH_data = [];
       const T_data = [];
+
       //Django
       {% for x in DO_axis %}
         DO_data.push('{{ x }}')
@@ -71,6 +72,7 @@
     const ctx_DO = document.getElementById('myDOChart').getContext('2d');
     const ctx_PH = document.getElementById('myPHChart').getContext('2d');
     const ctx_T = document.getElementById('myTempChart').getContext('2d');
+
     const myDOChart = new Chart(ctx_DO, {
       type: 'line',
       data: {
