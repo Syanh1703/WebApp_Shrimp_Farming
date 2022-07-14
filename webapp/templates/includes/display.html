@@ -1,55 +1,97 @@
-
-<table class = "table table-dark table-stripped" style="width: 70%;">
+<table class="table table-dark table-stripped" style="width: 80%;"
+       xmlns:background-color="http://www.w3.org/1999/xhtml">
     <thead style="text-align: center;">
         <tr>
-            <th style="text-align: center;" scope="col">Time</th>
-            <th style="text-align: center;" scope="col">PH</th>
-            <th style="text-align: center;" scope="col">DO</th>
-            <th style="text-align: center;" scope="col">Temp</th>
+            <th style="text-align: center;" scope="col" width="150px">Date</th>
+            <th style="text-align: center;" scope="col" width="150px">Time</th>
+            <th style="text-align: center;" scope="col" width="150px">PH</th>
+            <th style="text-align: center;" scope="col" width="150px">DO (mgL)</th>
+            <th style="text-align: center;" scope="col" width="150px">Temp (&#8451)</th>
         </tr>
     </thead>
     <tbody id="table_body">
+         <meta http-equiv="refresh" content="120">
+            {% for data in datas %}
             <tr>
-                <td id="timeCollect", style="text-align:center;">{{ date }}</td>
-                <td id="valuePH", style="text-align:center;">{{ PH }}</td>
-                <td id="valueDO", style="text-align:center;">{{ DO }}</td>
-                <td id="valueTemp", style="text-align:center;">{{ Temp }}</td>
+                <td id="date_{{ data.id }}", style="text-align:center;">{{ data.date }}</td>
+                <td id="timeTaken_{{ data.id }}", style="text-align:center;">{{ data.timeTaken }}</td>
+                <td id="PH_{{ data.id }}", style="text-align:center;">{{ data.PH }}</td>
+                <td id="DO_{{ data.id }}", style="text-align:center;">{{ data.DO }}</td>
+                <td id="T_{{ data.id }}", style="text-align:center;">{{ data.T }}</td>
             </tr>
-        
+            {% endfor %}
     </tbody>
 </table>
+
 
 <br>
 
 <script>
-    function startLiveUpdate()
-    {
-        const valuePH = document.getElementById('valuePH')
-        const valueDO = document.getElementById('valueDO')
-        const valueTemp = document.getElementById('valueTemp')
-        const timeCollect = document.getElementById('timeCollect')
+<!-- Live update >
+    console.log("Start update here")
 
-        setInterval(function()
-        {
-            fetch('/data_json').then(function(response)
-            {
-                return response.json()
-            }).then(function(data)
-            {
-                valuePH.textContent =  data.pH;
-                valueDO.textContent = data.DO;
-                valueTemp.textContent = data.Tmp;
-                timeCollect.textContent = data.date;
+    var timeTaken = '';
+    graph_time = [];
+    sensor_val = [];
 
-            }).catch(function(error)
-            {
-                console.log(error);
-            })
-        },1000);
+    {% for x in timeMeasured %}
+        graph_time.push('{{ x }}')
+     {% endfor %}
+
+    timeTaken = graph_time[0].toString() + graph_time[1].toString() + "_" + graph_time[3].toString() + graph_time[4].toString();
+
+    alertColor = "#E74C3C";
+    safeZoneColor = "#27AE60";
+    warningColor = "#F5B041";
+
+    setInterval(trial_log,3000)
+    function trial_log(){
+        console.log("Update table")
+
+       {% for data in datas %}
+            sensor_val.push({{ data.PH }})
+            sensor_val.push({{ data.DO }})
+            sensor_val.push({{ data.T }})
+
+            PH = document.getElementById("PH"+ "_" + {{ data.id }})
+            DO = document.getElementById("DO" + "_" + {{ data.id }})
+            T = document.getElementById("T" + "_" + {{ data.id }})
+
+            pH_val = parseFloat(PH.innerHTML);
+            DO_val = parseFloat(DO.innerHTML);
+            Temp_val = parseFloat(T.innerHTML);
+
+            if(DO_val > 8 || DO_val < 4){
+                DO.style.backgroundColor = alertColor;
+            }
+            else if(DO_val == 6 || DO_val == 7){
+                DO.style.backgroundColor = safeZoneColor;
+            }
+            else{
+                DO.style.backgroundColor = warningColor;
+            }
+
+            if(pH_val > 8.5 || pH_val < 7.8){
+                PH.style.backgroundColor = alertColor;
+            }
+            else{
+                PH.style.backgroundColor = safeZoneColor;
+            }
+
+            if(Temp_val < 26 || Temp_val > 30){
+                T.style.backgroundColor = alertColor;
+            }
+            else if(Temp_val == 27 || Temp_val == 28){
+                T.style.backgroundColor = safeZoneColor;
+            }
+            else{
+                T.style.backgroundColor = warningColor;
+            }
+
+        {% endfor %}
+        console.log(sensor_val)
+        sensor_val = [];
     }
-    document.addEventListener('ContentLoader', function()
-    {
-        startLiveUpdate();
-    });
+
 </script>
 

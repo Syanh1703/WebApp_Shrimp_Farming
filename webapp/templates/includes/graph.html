@@ -1,6 +1,4 @@
-<head>
-  <meta http-equiv="refresh" content="30">
-</head>
+
 <br>
 <style type="text/css">
   .label{
@@ -11,35 +9,37 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100vw;
+    width: 130vw;
     height: 30vh;
   }
   .chartBox{
-    width: 30%;
+    width: 40%;
     padding: 20px;
   }
   h2{
     text-align: center;
-    font-size: 46px;
+    font-size: 45px;
   }
   h3{
     text-align: center;
     font-size: 40px;
+    margin-top: 10em,
   }
 </style>
 
 <!--Link to Firebase-->
 <body>
-  
+
+<p style="padding-bottom:5px;"></p>
   <div class="chartCard" style="position: relative;" id="sensor-stats">
     <div class="chartBox">
-      <canvas id="myPHChart"></canvas>
+      <canvas id="myPHChart" style="background-color: #000000"></canvas>
     </div>
     <div class="chartBox">
-      <canvas id="myDOChart"></canvas>
+      <canvas id="myDOChart" style="background-color: #000000;"></canvas>
     </div>
     <div class="chartBox">
-      <canvas id="myTempChart"></canvas>
+      <canvas id="myTempChart" style="background-color: #000000;"></canvas>
     </div>
   </div>
 
@@ -48,8 +48,20 @@
       const DO_data = [];
       const PH_data = [];
       const T_data = [];
+      const graph_date = [];
+      date = '';
 
       //Django
+      {% for x in date %}
+      graph_date.push('{{ x }}')
+      {% endfor %}
+
+      {% if date|length > 4 %}
+        date = graph_date[0].toString() + graph_date[1].toString() + "-" + graph_date[3].toString() + graph_date[4].toString();
+      {% else %}
+        date = graph_date[0].toString() + "-" + graph_date[2].toString() + graph_date[3].toString();
+      {% endif %}
+
       {% for x in DO_axis %}
         DO_data.push('{{ x }}')
       {% endfor %}
@@ -62,17 +74,20 @@
         T_data.push('{{ x }}')
       {% endfor %}
 
+
+
   </script>
   <script>
     let x_axis = []
     for(let i = 0; i<24; i++)
     {
-      x_axis.push(i.toString());
+      x_axis.push(i.toString() + ":00");
     }
     const ctx_DO = document.getElementById('myDOChart').getContext('2d');
     const ctx_PH = document.getElementById('myPHChart').getContext('2d');
     const ctx_T = document.getElementById('myTempChart').getContext('2d');
 
+    Chart.defaults.font.size = 16;
     const myDOChart = new Chart(ctx_DO, {
       type: 'line',
       data: {
@@ -80,9 +95,9 @@
           datasets: [{
               label: 'DO Value',
               data: DO_data,
-              backgroundColor: 'transparent',
-              borderColor: 'red',
-              borderWidth: 3
+              borderColor: 'blue',
+              backgroundColor: 'blue',
+              borderWidth: 3,
           }]
       },
       options: {
@@ -97,8 +112,34 @@
         },
           scales: {
               y: {
-                  beginAtZero: true
-              }
+                  beginAtZero: true,
+                  title:{
+                    display: true,
+                    text: 'Value',
+                    color: 'white'
+                  },
+                  ticks:{
+                    color: 'white'
+                  },
+                  grid:{
+                    color: 'white',
+                    borderDash: [1, 2]
+                  },
+              },
+              x:{
+                title:{
+                  display:true,
+                  text: date,
+                  color: 'white'
+                },
+                ticks:{
+                  color: 'white'
+                },
+               grid:{
+                  color: 'white',
+                  borderDash: [1, 2],
+                },
+              },
           }
       }
   });
@@ -110,8 +151,8 @@
           datasets: [{
               label: 'PH Value',
               data: PH_data,
-              backgroundColor: 'transparent',
-              borderColor: 'red',
+              backgroundColor: 'yellow',
+              borderColor: 'yellow',
               borderWidth: 3
           }]
       },
@@ -127,8 +168,34 @@
         },
           scales: {
               y: {
-                  beginAtZero: true
-              }
+                  beginAtZero: true,
+                  title:{
+                    display:true,
+                    text: 'Value',
+                    color: 'white',
+                  },
+                  ticks:{
+                    color: 'white'
+                  },
+                  grid:{
+                    color: 'white',
+                    borderDash: [1, 2]
+                  },
+              },
+              x:{
+              title:{
+                display:true,
+                text: date,
+                color: 'white'
+              },
+               ticks:{
+                    color: 'white'
+                  },
+                  grid:{
+                    color: 'white',
+                    borderDash: [1, 2]
+                  },
+              },
           }
       }
   });
@@ -140,7 +207,7 @@
           datasets: [{
               label: 'Temperature Value',
               data: T_data,
-              backgroundColor: 'transparent',
+              backgroundColor: 'red',
               borderColor: 'red',
               borderWidth: 3
           }]
@@ -157,8 +224,34 @@
         },
           scales: {
               y: {
-                  beginAtZero: true
-              }
+                  beginAtZero: true,
+                  title:{
+                    display:true,
+                    text: 'Value',
+                    color: 'white'
+                  },
+                  ticks:{
+                    color: 'white'
+                  },
+                  grid:{
+                    color: 'white',
+                    borderDash: [1, 2]
+                  },
+              },
+              x:{
+              title:{
+              display:true,
+              text: date,
+              color: 'white'
+              },
+              ticks:{
+                  color: 'white'
+                },
+                grid:{
+                  color: 'white',
+                  borderDash: [1, 2]
+                },
+              },
           }
       }
   });
