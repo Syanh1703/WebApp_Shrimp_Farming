@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<title>Sensor Result Table</title>
+<title>Sensor Value</title>
 
 {% endblock %}
 
@@ -27,11 +27,11 @@
 </style>
 <div class="result">
     <p></p>
-    <img src="static/image/vgu.jpg" alt="VGU" style="margin: 20px">
-    <h2>Sensor Value</h2>
+    <img src="static/image/vgu_vector.webp" alt="VGU" style="margin: 20px" height="20%" width="20%">
+    <h2>Sensor Result Table</h2>
     <p></p>
         {% include 'includes/display.html' %}
-        <h3>Details Value</h3>
+        <h2>Details Value</h2>
     <p></p>
         {% include 'includes/graph.html' %}
 </div> 

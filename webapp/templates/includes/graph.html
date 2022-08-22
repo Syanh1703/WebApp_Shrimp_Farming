@@ -59,7 +59,7 @@
       {% if date|length > 4 %}
         date = graph_date[0].toString() + graph_date[1].toString() + "-" + graph_date[3].toString() + graph_date[4].toString();
       {% else %}
-        date = graph_date[0].toString() + "-" + graph_date[2].toString() + graph_date[3].toString();
+        date = "0" + graph_date[0].toString() + "-" + graph_date[2].toString() + graph_date[3].toString();
       {% endif %}
 
       {% for x in DO_axis %}

@@ -26,7 +26,7 @@ if month<10:
 else:
     month = str(month)
 #date = str(day + "-" + month)
-date = "1-07"
+date = "19-07"
 print(f'{date}')
 
 #Time
@@ -64,17 +64,26 @@ class MyNode():
         for key, val in snapshot.items():
             self.time = key
             self.present_data.append(self.sensorName)
-            self.present_data.append(round(val[self.sensorName],rounded_digits))
+            if val[self.sensorName] is None or val[self.sensorName] < 0:
+                self.present_data.append(0)
+            else:
+                self.present_data.append(round(val[self.sensorName],rounded_digits))
             self.present_data.append(self.time)
             self.present_data.append(self.date)
             self.present_data.append(self.year)
 
     def get_online_chart(self):
         start = perf_counter()
-        snapshot = db.reference('/Node1').child(year).child(date).order_by_key().limit_to_last(144).get()
+        # 144 = 24 * 6
+        snapshot = db.reference('/Node1').child(year).child(date).order_by_key().limit_to_last(140).get()
         for key,val in snapshot.items():
             self.time = key
+            # if val['PH'] < 0 or val['PH'] is None: #Negative value or not value at the timestamp
+            #     self.pH_hourly_array.append(0)
+            # else:
             self.pH_hourly_array.append(round(val['PH'], rounded_digits))
+
+
             self.DO_hourly_array.append(round(val['DO'], rounded_digits))
             self.Temp_hourly_array.append(round(val['T'], rounded_digits))
 

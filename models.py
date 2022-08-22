@@ -11,6 +11,7 @@ if month_json < 10:
 else:
     month_json = str(month_json)
 date_json = str(day + "-" + month_json)
+#date_json = "2-08"
 print(f'date: {date_json}')
 
 # Time
